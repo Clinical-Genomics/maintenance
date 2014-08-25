@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="https://github.com/Clinical-Genomics">
-    <img src="artwork/icon-tools.svg"/>
+    <img height="120px" width="120px" src="artwork/icon.png"/>
   </a>
 </p>
 
