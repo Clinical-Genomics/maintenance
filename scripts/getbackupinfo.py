@@ -32,6 +32,6 @@ with open(configfile, "r") as confs:
       params[pv[0]] = pv[1]
 
 for val in params:
-  print val, params['val']
+  print val, params[val]
   
 exit(0)
