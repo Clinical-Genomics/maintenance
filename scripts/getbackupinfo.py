@@ -15,13 +15,13 @@ import select
 if (len(sys.argv)>1):
   basedir = sys.argv[1]
 else:
-  message = ("usage: "+sys.argv[0]+" <BASEDIRECTORYforUNALIGNED> <absolutepathtosamplesheetcsv> <config_file:optional>")
+  message = ("usage: "+sys.argv[0]+" <rundir> <config_file:optional>")
   sys.exit(message)
 
 configfile = "/home/hiseq.clinical/.scilifelabrc"
-if (len(sys.argv)>3):
-  if os.path.isfile(sys.argv[3]):
-    configfile = sys.argv[3]
+if (len(sys.argv)>2):
+  if os.path.isfile(sys.argv[2]):
+    configfile = sys.argv[2]
     
 params = {}
 with open(configfile, "r") as confs:
@@ -33,5 +33,9 @@ with open(configfile, "r") as confs:
 
 for val in params:
   print val, params[val]
+
+
+
+
   
 exit(0)
