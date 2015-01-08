@@ -5,7 +5,6 @@
 #
 import sys
 import MySQLdb as mysql
-from bs4 import BeautifulSoup
 import time
 import glob
 import re
@@ -32,3 +31,7 @@ with open(configfile, "r") as confs:
       pv = line.split(" ")
       params[pv[0]] = pv[1]
 
+for val in params:
+  print val params['val']
+  
+exit(0)
