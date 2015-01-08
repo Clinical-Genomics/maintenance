@@ -13,7 +13,7 @@ import os
 import select
 
 if (len(sys.argv)>1):
-  basedir = sys.argv[1]
+  rundir = sys.argv[1]
 else:
   message = ("usage: "+sys.argv[0]+" <rundir> <config_file:optional>")
   sys.exit(message)
@@ -34,8 +34,41 @@ with open(configfile, "r") as confs:
 for val in params:
   print val, params[val]
 
+now = time.strftime('%Y-%m-%d %H:%M:%S')
+# this script is written for database version:
+_VERSION_ = params['DBVERSION']
 
+cnx = mysql.connect(user=params['CLINICALDBUSER'], port=int(params['CLINICALDBPORT']), host=params['CLINICALDBHOST'], 
+                    passwd=params['CLINICALDBPASSWD'], db=params['STATSDB'])
+cursor = cnx.cursor()
 
+cursor.execute(""" SELECT major, minor, patch FROM version ORDER BY time DESC LIMIT 1 """)
+row = cursor.fetchone()
+if row is not None:
+  major = row[0]
+  minor = row[1]
+  patch = row[2]
+else:
+  sys.exit("Incorrect DB, version not found.")
+if (str(major)+"."+str(minor)+"."+str(patch) == _VERSION_):
+  print params['STATSDB'] + " Correct database version "+str(_VERSION_)+"   DB "+params['STATSDB']
+else:
+  exit (params['STATSDB'] + "Incorrect DB version. This script is made for "+str(_VERSION_)+" not for "
+         +str(major)+"."+str(minor)+"."+str(patch))
+         
+print "\n\t\tIf this is INCORRECT press <enter> else do nothing [will timeout in 5 sec]"
+i, o, e = select.select( [sys.stdin], [], [], 5 )
+if (i):
+  sys.exit("\nWill exit . . . due to manual intervention.")
+else:
+  print "\n . . . continues after 5 sec delay!"
+
+runbase = params['RUNFOLDER']
+oldrunbase = params['OLDRUNFOLDER']
+
+print rundir
+print runbase
+print oldrunbase
 
   
 exit(0)
