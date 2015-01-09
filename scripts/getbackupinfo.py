@@ -103,5 +103,10 @@ else:
   print "Support "+basedir+"Unaligned/support.txt"+" exists in DB with supportparams_id: "+str(supportparamsid)
   
 
+#Closes the cursor
+cursor.close()
+#Closes the connection to the database
+cnx.close()
+
 
 exit(0)
