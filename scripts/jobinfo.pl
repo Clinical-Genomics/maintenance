@@ -23,7 +23,7 @@ BEGIN {
 }
 
 my %line;
-my @orderHeaders = ("JobId", "Name", "JobState", "RunTime", "TimeLimit", "Dependency");
+my @orderHeaders = ("JobId", "UserId", "Name", "JobState", "RunTime", "TimeLimit", "Dependency");
 my ($infile, $user, $jobId) = ("", "noInfo", "noInfo");
 my ($help, $version) = (0, 0);
 
@@ -43,7 +43,7 @@ if($help) {
     print STDOUT "\n".$USAGE, "\n";
     exit;
 }
-my $jobInfoVersion = "1.0.0";
+my $jobInfoVersion = "1.1.0";
 
 if($version) {
 
@@ -54,24 +54,27 @@ if($version) {
 print "#";
 for (my $elementCounter=0;$elementCounter<scalar(@orderHeaders);$elementCounter++) {
 
-    my $key = \$orderHeaders[$elementCounter];
-    if ($$key eq "Name") {
+    my $key = $orderHeaders[$elementCounter];
+    if ($key eq "Name") {
 
-        printf "%-50s",$$key;
+        printf "%-50s",$key;
     }
-    elsif($$key eq "Dependency") {
+    elsif($key eq "UserId") {
+        printf "%-20s", $key
+    }
+    elsif($key eq "Dependency") {
 
-        print $$key;
+        print $key;
     }
     else {
 
         if ($elementCounter==0) {
 
-            printf "%-10s",$$key;
+            printf "%-10s",$key;
         }
         else {
 
-            printf "%-11s",$$key;
+            printf "%-11s",$key;
         }
     }
 }
@@ -120,18 +123,23 @@ while (<>) {
 
             for (my $elementCounter=0;$elementCounter<scalar(@orderHeaders);$elementCounter++) {
 
-                my $key = \$orderHeaders[$elementCounter];
-                if ($$key eq "Name") {
+                my $key = $orderHeaders[$elementCounter];
+                if ($key eq "Name") {
 
-                    printf "%-50s",$line{$$key};
+                    printf "%-50s",$line{$key};
                 }
-                elsif($$key eq "Dependency") {
+                elsif($key eq "Dependency") {
 
-                    print $line{$$key};
+                    print $line{$key};
+                }
+                elsif($key eq "UserId") {
+                    (my $currentUser = $line{$key}) =~ s/(.*)\(.*/$1/;
+
+                    printf "%-20s", $currentUser;
                 }
                 else {
 
-                    printf "%-11s",$line{$$key};
+                    printf "%-11s",$line{$key};
                 }
             }
             print "\n";
