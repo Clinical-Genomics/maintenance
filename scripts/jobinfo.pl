@@ -39,43 +39,32 @@ GetOptions('u|user:s' => \$user,
 );
 
 if($help) {
-
     print STDOUT "\n".$USAGE, "\n";
     exit;
 }
 my $jobInfoVersion = "1.1.0";
 
 if($version) {
-
     print STDOUT "\njobinfo.pl v".$jobInfoVersion, "\n\n";
     exit
 }
 
 print "#";
-for (my $elementCounter=0;$elementCounter<scalar(@orderHeaders);$elementCounter++) {
-
-    my $key = $orderHeaders[$elementCounter];
+for my $key (@orderHeaders) {
     if ($key eq "Name") {
-
         printf "%-50s",$key;
     }
-    elsif($key eq "UserId") {
+    elsif ($key eq "UserId") {
         printf "%-20s", $key
     }
-    elsif($key eq "Dependency") {
-
+    elsif ($key eq "Dependency") {
         print $key;
     }
+    elsif ($key eq 'JobId') {
+        printf "%-10s",$key;
+    }
     else {
-
-        if ($elementCounter==0) {
-
-            printf "%-10s",$key;
-        }
-        else {
-
-            printf "%-11s",$key;
-        }
+        printf "%-11s",$key;
     }
 }
 print "\n";
@@ -83,62 +72,48 @@ print "\n";
 my $printStatus = 0;
 
 while (<>) {    
-
     if ($jobId ne "noInfo") {
-
-        if($_=~/JobId=(\S+)/) {
-
+        if ($_=~/JobId=(\S+)/) {
             my $currentJobId = $1;
             if ($currentJobId eq $jobId) {
-
                 $printStatus = 1;
             }
         }
     }
     elsif ($user ne "noInfo") {
-
         if($_=~/UserId=(\w+.\w+)/) {
-
             my $currentUser = $1;
             if ($currentUser eq $user) {
-
                 $printStatus = 1;
             }
         }
     }
+
     foreach my $key (@orderHeaders) {
-
-        if($_=~/$key=(\S+)/) { 
-
+        if ($_=~/$key=(\S+)/) { 
             $line{$key} = $1
         } 
     }
+
     if($_=~/^\s+$/) {
 
-        if( ($jobId eq "noInfo") && ($user eq "noInfo") ) {
-
+        if ( ($jobId eq "noInfo") && ($user eq "noInfo") ) {
             $printStatus = 1;
         }
-        if($printStatus == 1) {
-
-            for (my $elementCounter=0;$elementCounter<scalar(@orderHeaders);$elementCounter++) {
-
-                my $key = $orderHeaders[$elementCounter];
+        if ($printStatus == 1) {
+            for my $key (@orderHeaders) {
                 if ($key eq "Name") {
-
                     printf "%-50s",$line{$key};
                 }
-                elsif($key eq "Dependency") {
-
+                elsif ($key eq "Dependency") {
                     print $line{$key};
                 }
-                elsif($key eq "UserId") {
+                elsif ($key eq "UserId") {
                     (my $currentUser = $line{$key}) =~ s/(.*)\(.*/$1/;
 
                     printf "%-20s", $currentUser;
                 }
                 else {
-
                     printf "%-11s",$line{$key};
                 }
             }
