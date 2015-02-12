@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ -z $1 ]]; then
+    >&2 echo 'USAGE: $0 hostname'
+    exit 1
+fi
+NODENAME=$1
+
+srun -A prod001 -c 1 --nodelist="$NODENAME" sleep 5 &
+ssh $NODENAME ${@:2}
