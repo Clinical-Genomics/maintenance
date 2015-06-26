@@ -2,6 +2,8 @@
 
 STARTDIR=/scratch
 
+du -sh ${STARTDIR}
+
 for d in `ls $STARTDIR`; do
     if [[ ${@#} > 0 ]]; then
         if [[ "${@} " =~ "$d " ]]; then
@@ -13,3 +15,5 @@ for d in `ls $STARTDIR`; do
     echo rm -rf "$STARTDIR/$d"
     rm -rf "$STARTDIR/$d"
 done
+
+du -sh ${STARTDIR}
