@@ -10,7 +10,7 @@ for i in `seq 1 22`; do
     SCRATCH_LOG_FILE=$( printf $SCRATCH_LOG $NODENAME )
     
     SCRATCH_DF=$(ssh $NODENAME df)
-    if [[ $? == 0 ]]; then
+    if [[ $? -eq 0 ]]; then
         SCRATCH_DF=$(echo "$SCRATCH_DF" | grep scratch | awk '{print strftime("[%Y-%m-%d %H:%M:%S]"), $2" "$4}')
         printf "$SCRATCH_DF $NODE_JOBS\n" >> $SCRATCH_LOG_FILE
     fi
