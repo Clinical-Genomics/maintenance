@@ -5,12 +5,12 @@
 #SBATCH -J rm_scratch
 #SBATCH --output=/mnt/hds/proj/bioinfo/LOG/scratch-%j.out
 #SBATCH --error=/mnt/hds/proj/bioinfo/LOG/scratch-%j.err
-#SBATCH --mail-type=END
-#SBATCH --mail-user=kenny.billiau@scilifelab.se
+##SBATCH --mail-type=END
+##SBATCH --mail-user=kenny.billiau@scilifelab.se
 
 #!/bin/bash
 
-VERSION=2.0.0
+VERSION=2.1.0
 echo ${VERSION}
 
 STARTDIR=/scratch
