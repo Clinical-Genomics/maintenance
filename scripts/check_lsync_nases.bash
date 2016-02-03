@@ -28,6 +28,6 @@ for NAS in ${NASES[@]}; do
     	log "${NAS} OK!"
     else
     	log "${NAS} FAIL!"
-        echo "Lsync process stopped in ${NAS}" | mail -s "LSYNC is not running anymore" kenny.billiau@scilifelab.se
+        echo "Lsync process stopped in ${NAS}" | mail -s "LSYNC is not running anymore" kenny.billiau@scilifelab.se,emma.sernstad@scilifelab.se,robin.andeer@scilifelab.se,daniel.backman@scilifelab.se
     fi
 done
