@@ -10,13 +10,17 @@ for ANALYSIS in exomes genomes; do
     FINISHED=$(grep 'AnalysisRunStatus: Finished' -l */*/${ANALYSIS}/*/*_qc_sampleInfo.yaml)
     
     for RUN in ${FINISHED}; do
-        ls -l ${RUN}
-    
-        CUST=$(echo ${RUN} | awk 'BEGIN { FS="/" } { print $1 }')
-        FAMILY=$(echo ${RUN} | awk 'BEGIN { FS="/" } { print $2 }')
-    
-        echo "bash ${CUST}/${FAMILY}/${ANALYSIS}_scripts/${FAMILY}/bwa/RemoveRedundantFiles_${FAMILY}.*.sh"
-        bash ${CUST}/${FAMILY}/${ANALYSIS}_scripts/${FAMILY}/bwa/RemoveRedundantFiles_${FAMILY}.*.sh
+
+       # only remove the runs that are a week old...
+       DAYS_AGO=$(( ( $(date +%s) - $(stat ${RUN} -c %Y) ) / ( 60 * 60 * 24 ) ))
+       echo ${RUN} ${DAYS_AGO}
+       if [[ ${DAYS_AGO} -gt 6 ]]; then
+            CUST=$(echo ${RUN} | awk 'BEGIN { FS="/" } { print $1 }')
+            FAMILY=$(echo ${RUN} | awk 'BEGIN { FS="/" } { print $2 }')
+ 
+            echo "bash ${CUST}/${FAMILY}/${ANALYSIS}_scripts/${FAMILY}/bwa/RemoveRedundantFiles_${FAMILY}.*.sh"
+            bash ${CUST}/${FAMILY}/${ANALYSIS}_scripts/${FAMILY}/bwa/RemoveRedundantFiles_${FAMILY}.*.sh
+        fi
     done
 done
 cd ${OLDPWD}
