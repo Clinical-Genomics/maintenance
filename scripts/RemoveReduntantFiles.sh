@@ -13,7 +13,7 @@ for ANALYSIS in exomes genomes; do
 
        # only remove the runs that are a week old...
        DAYS_AGO=$(( ( $(date +%s) - $(stat ${RUN} -c %Y) ) / ( 60 * 60 * 24 ) ))
-       echo ${RUN} ${DAYS_AGO}
+       echo "${RUN} ran ${DAYS_AGO} days ago"
        if [[ ${DAYS_AGO} -gt 6 ]]; then
             CUST=$(echo ${RUN} | awk 'BEGIN { FS="/" } { print $1 }')
             FAMILY=$(echo ${RUN} | awk 'BEGIN { FS="/" } { print $2 }')
