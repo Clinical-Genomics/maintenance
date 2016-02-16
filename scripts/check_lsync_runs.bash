@@ -23,7 +23,7 @@ for RUN in ${RUN_DIR}/*; do
 
     # if the run is not complete, check if it is still syncing!
     if [[ ! -f ${RUN}/RTAComplete.txt ]]; then
-        # fine last file
+        # creation timestamp last file
         LAST_TIMESTAMP=$(find ${RUN} -type f -printf '%T@' | sort -n | tail -1) 
         LAST_TIMESTAMP_AGO=$(( $(date +%s) - ${LAST_TIMESTAMP##.*} ))
 
