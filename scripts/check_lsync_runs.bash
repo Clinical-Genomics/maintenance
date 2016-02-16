@@ -29,7 +29,7 @@ for RUN in ${RUN_DIR}/*; do
 
         # if latest file older then 15mins ...
         if [[ $LAST_TIMESTAMP_AGO -gt 1000 ]]; then
-            #echo "${RUN} is not syncing anymore!" | mail -s "${RUN} is not running anymore!" kenny.billiau@scilifelab.se,emma.sernstad@scilifelab.se,robin.andeer@scilifelab.se,daniel.backman@scilifelab.se
+            echo "${RUN} is not syncing anymore!" | mail -s "${RUN} is not running anymore!" kenny.billiau@scilifelab.se,emma.sernstad@scilifelab.se,robin.andeer@scilifelab.se,daniel.backman@scilifelab.se
             log "${RUN} Sync FAIL!"
         else
             log "${RUN} Syncing"
