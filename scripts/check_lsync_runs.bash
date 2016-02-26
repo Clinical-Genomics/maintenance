@@ -24,8 +24,8 @@ for RUN in ${RUN_DIR}/*; do
     # if the run is not complete, check if it is still syncing!
     if [[ ! -f ${RUN}/RTAComplete.txt ]]; then
         # creation timestamp last file
-        LAST_TIMESTAMP=$(find ${RUN} -type f -printf '%T@' | sort -n | tail -1) 
-        LAST_TIMESTAMP_AGO=$(( $(date +%s) - ${LAST_TIMESTAMP##.*} ))
+        LAST_TIMESTAMP=$(find ${RUN}/Logs -type f -printf '%T@\n' | sort -n | tail -1) 
+        LAST_TIMESTAMP_AGO=$(( $(date +%s) - ${LAST_TIMESTAMP%%.*} ))
 
         # if latest file older then 15mins ...
         if [[ $LAST_TIMESTAMP_AGO -gt 1000 ]]; then
