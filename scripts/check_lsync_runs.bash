@@ -27,8 +27,9 @@ for RUN in ${RUN_DIR}/*; do
         LAST_TIMESTAMP=$(find ${RUN}/Logs -type f -printf '%T@\n' | sort -n | tail -1) 
         LAST_TIMESTAMP_AGO=$(( $(date +%s) - ${LAST_TIMESTAMP%%.*} ))
 
-        # if latest file older then 15mins ...
-        if [[ $LAST_TIMESTAMP_AGO -gt 1000 ]]; then
+        # if latest file older then 2h45mins ...
+        # between reading index and read2 there are 2h30mins of no data!
+        if [[ $LAST_TIMESTAMP_AGO -gt 10000 ]]; then
             echo "${RUN} is not syncing anymore!" | mail -s "${RUN} is not running anymore!" kenny.billiau@scilifelab.se,emma.sernstad@scilifelab.se,robin.andeer@scilifelab.se,daniel.backman@scilifelab.se
             log "${RUN} Sync FAIL!"
         else
