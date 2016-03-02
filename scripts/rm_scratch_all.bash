@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=2.3.7
+VERSION=2.3.8
 NOW=$(date +"%Y%m%d%H%M%S")
 echo "[$NOW] ${VERSION}"
 
