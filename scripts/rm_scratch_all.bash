@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=2.3.8
+VERSION=2.3.9
 LOG_DIR=${1-/mnt/hds/proj/bioinfo/LOG/}
 
 
