@@ -10,7 +10,7 @@
 
 #!/bin/bash
 
-VERSION=2.3.9
+VERSION=2.3.10
 echo ${VERSION}
 
 STARTDIR=/scratch
