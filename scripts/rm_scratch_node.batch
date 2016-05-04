@@ -18,6 +18,9 @@ STARTDIR=/scratch
 du -sh ${STARTDIR}
 
 for d in `ls $STARTDIR`; do
+    if [[ $d == 'REFERENCES' ]]; then
+        continue # don't remove the references dir
+    fi
     if [[ ${@#} > 0 ]]; then
         if [[ "${@} " =~ "$d " ]]; then
             continue
