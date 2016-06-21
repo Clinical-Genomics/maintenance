@@ -5,8 +5,8 @@
 # PARAMS #
 ##########
 
-NASES=(clinical-nas-2 seq-nas-1 seq-nas-2 seq-nas-3 nas-6 nas-7 nas-8 nas-9 nas-10)
-EMAILS=kenny.billiau@scilifelab.se,emma.sernstad@scilifelab.se,robin.andeer@scilifelab.se,daniel.backman@scilifelab.se
+NASES=(clinical-nas-2 seq-nas-1 seq-nas-2 seq-nas-3 nas-7 nas-8 nas-9 nas-10)
+EMAILS=bioinfo.clinical@scilifelab.se
 
 #############
 # FUNCTIONS #
@@ -35,7 +35,7 @@ for NAS in ${NASES[@]}; do
     fi
 
     # check the process list on the NAS
-    echo "$SSH_PS" | grep lsync | grep -q hiseq.bioinfo
+    echo "$SSH_PS" | grep lsync | grep -q hiseq.clinical
     if [[ $? -eq 0 ]]; then
     	log "${NAS} OK!"
     else
