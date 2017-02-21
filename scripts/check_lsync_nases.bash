@@ -30,7 +30,7 @@ for NAS in ${NASES[@]}; do
     if [[ $? -ne 0 ]]; then
         # ssh fail, network fail ... try again in next iteration
     	log "${NAS} Network FAIL!"
-        echo "${NAS} was not reachable" | mail -s "${NAS} was not reachable!" ${EMAILS}
+        echo "${NAS} was not reachable" | mail -s "${NAS} was not reachable!" kenny.billiau@scilifelab.se
         continue
     fi
 
