@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # checks if a run still syncs
+set -ue
+
+EMAIL=bioinfo.clinical@scilifelab.se
 
 #############
 # FUNCTIONS #
@@ -11,6 +14,11 @@ log() {
 
     echo [${NOW}] $@
 }
+
+errr() {
+    echo "$(hostname): err while running $0" | mail -s "$(hostname): err while running $0" ${EMAIL}
+}
+trap errr ERR
 
 ########
 # MAIN #
@@ -25,12 +33,15 @@ for RUN in ${RUN_DIR}/*; do
     if [[ ! -f ${RUN}/RTAComplete.txt ]]; then
         # creation timestamp last file
         LAST_TIMESTAMP=$(find ${RUN}/Logs -type f -printf '%T@\n' | sort -n | tail -1) 
+        if [[ -z ${LAST_TIMESTAMP} ]]; then
+            LAST_TIMESTAMP=$(find ${RUN} -type f -printf '%T@\n' | sort -n | tail -1) 
+        fi
         LAST_TIMESTAMP_AGO=$(( $(date +%s) - ${LAST_TIMESTAMP%%.*} ))
 
         # if latest file older then 2h45mins ...
         # between reading index and read2 there are 2h30mins of no data!
         if [[ $LAST_TIMESTAMP_AGO -gt 10000 ]]; then
-            echo "${RUN} is not syncing anymore!" | mail -s "${RUN} is not running anymore!" bioinfo.clinical@scilifelab.se
+            echo "${RUN} is not syncing anymore!" | mail -s "${RUN} is not running anymore!" ${EMAIL}
             log "${RUN} Sync FAIL!"
         else
             log "${RUN} Syncing"
