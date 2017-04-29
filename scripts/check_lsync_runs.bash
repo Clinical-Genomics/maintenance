@@ -32,7 +32,7 @@ for RUN in ${RUN_DIR}/*; do
     # if the run is not complete, check if it is still syncing!
     if [[ ! -f ${RUN}/RTAComplete.txt ]]; then
         # creation timestamp last file
-        LAST_TIMESTAMP=$(find ${RUN}/Logs -type f -printf '%T@\n' | sort -n | tail -1) 
+        LAST_TIMESTAMP=$(find ${RUN}/Data/BaseCalls/L001/ -type d -printf '%T@\n' | sort -n | tail -1)
         if [[ -z ${LAST_TIMESTAMP} ]]; then
             LAST_TIMESTAMP=$(find ${RUN} -type f -printf '%T@\n' | sort -n | tail -1) 
         fi
