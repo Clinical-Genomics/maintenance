@@ -41,7 +41,7 @@ for RUN in ${RUN_DIR}/*; do
         # if latest file older then 2h45mins ...
         # between reading index and read2 there are 2h30mins of no data!
         if [[ $LAST_TIMESTAMP_AGO -gt 10000 ]]; then
-            MSG="$(hostname): ${RUN} is not syncing anymore!"
+            MSG="$(hostname):${RUN} is not syncing anymore!"
             echo "${MSG}" | mail -s "${MSG}" ${EMAIL}
             log "${RUN} Sync FAIL!"
         else
