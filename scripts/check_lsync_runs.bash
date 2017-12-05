@@ -3,7 +3,7 @@
 # checks if a run still syncs
 set -ue
 
-EMAIL=bioinfo.clinical@scilifelab.se
+EMAIL=clinical-demux@scilifelab.se
 
 #############
 # FUNCTIONS #
