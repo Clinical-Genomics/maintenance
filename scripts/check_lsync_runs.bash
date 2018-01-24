@@ -3,7 +3,11 @@
 # checks if a run still syncs
 set -ue
 
-EMAIL=clinical-demux@scilifelab.se
+RUN_DIR=${1?'please provide base run dir'}
+TIMEOUT=${2-10000}
+EMAIL=${3-clinical-demux@scilifelab.se}
+# Default timeout is set to 2h30m (10000) as this is the time
+# between reading index and read2 for an X-run where there is no data.
 
 #############
 # FUNCTIONS #
@@ -16,7 +20,7 @@ log() {
 }
 
 errr() {
-    echo "$(hostname): err while running $0" | mail -s "$(hostname): err while running $0" ${EMAIL}
+    echo "$(hostname): err while running $(caller)" | mail -s "$(hostname): err while running $0" ${EMAIL}
 }
 trap errr ERR
 
@@ -24,7 +28,6 @@ trap errr ERR
 # MAIN #
 ########
 
-RUN_DIR=$1
 for RUN in ${RUN_DIR}/*; do
     # skip non-runs
     if [[ ! -d ${RUN} ]]; then continue; fi
@@ -38,9 +41,7 @@ for RUN in ${RUN_DIR}/*; do
         fi
         LAST_TIMESTAMP_AGO=$(( $(date +%s) - ${LAST_TIMESTAMP%%.*} ))
 
-        # if latest file older then 2h45mins ...
-        # between reading index and read2 there are 2h30mins of no data!
-        if [[ $LAST_TIMESTAMP_AGO -gt 10000 ]]; then
+        if [[ ${LAST_TIMESTAMP_AGO} -gt ${TIMEOUT} ]]; then
             MSG="$(hostname):${RUN} is not syncing anymore!"
             echo "${MSG}" | mail -s "${MSG}" ${EMAIL}
             log "${RUN} Sync FAIL!"
