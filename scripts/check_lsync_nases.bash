@@ -6,7 +6,7 @@
 ##########
 
 NASES=(clinical-nas-2 seq-nas-1 seq-nas-2 seq-nas-3 nas-7 nas-8 nas-9 nas-10)
-EMAILS=bioinfo.clinical@scilifelab.se
+EMAILS=clinical-demux@scilifelab.se
 
 #############
 # FUNCTIONS #
