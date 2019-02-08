@@ -5,7 +5,7 @@
 # PARAMS #
 ##########
 
-NASES=(clinical-nas-2 seq-nas-1 seq-nas-2 seq-nas-3 nas-7 nas-8 nas-9 nas-10)
+NASES=(clinical-nas-1 clinical-nas-2 seq-nas-1 seq-nas-2 seq-nas-3 nas-6 nas-7 nas-8 nas-9 nas-10)
 EMAILS=clinical-demux@scilifelab.se
 
 #############
