@@ -4,7 +4,7 @@
 set -ue
 
 RUN_DIR=${1?'please provide base run dir'}
-TIMEOUT=${2-10000}
+TIMEOUT=${2-10800}
 EMAIL=${3-clinical-demux@scilifelab.se}
 # Default timeout is set to 2h30m (10000) as this is the time
 # between reading index and read2 for an X-run where there is no data.
